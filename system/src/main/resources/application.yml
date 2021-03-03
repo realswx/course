@@ -1,6 +1,12 @@
 spring:
   application:
     name: system
+  # 数据库连接
+  datasource:
+    url: jdbc:mysql://42.193.102.174:3306/course_online?characterEncoding=utf-8&useSSL=false&autoReconnect=true
+    username: root
+    password: 987654
+    driver-class-name: com.mysql.cj.jdbc.Driver
 server:
   port: 9001
   servlet:
