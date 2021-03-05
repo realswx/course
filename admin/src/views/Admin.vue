@@ -977,6 +977,16 @@
 </template>
 
 <script>
-$('body').removeClass('class', 'login-layout light-login');
-$('body').attr('class', 'no-skin');
+export default {
+  name: 'Admin',
+  mounted: function() {
+    $('body').removeClass( 'login-layout light-login');
+    $('body').attr('class', 'no-skin');
+  },
+  methods: {
+    login() {
+      this.$router.push('/admin');
+    }
+  }
+}
 </script>
