@@ -22,3 +22,8 @@ CREATE TABLE `chapter` (
     `name` varchar(50) COMMENT '名称',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='大章';
+
+/*Data for the table `chapter` */
+insert  into `chapter`(`id`,`course_id`, `name`) values
+('00000001', '00000001', 'test1'),
+('00000002', '00000002', 'test2');
