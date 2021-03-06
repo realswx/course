@@ -978,3 +978,15 @@
     </table>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Chapter',
+  mounted: function() {
+    this.$parent.activeSidebar("business-chapter-sidebar");
+  },
+  methods: {
+
+  }
+}
+</script>
