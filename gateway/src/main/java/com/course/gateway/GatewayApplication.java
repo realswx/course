@@ -22,4 +22,6 @@ public class GatewayApplication {
         LOG.info("Gateway地址：\t http://127.0.0.1:{}", env.getProperty("server.port"));
     }
 
+
+
 }
