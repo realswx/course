@@ -1,0 +1,26 @@
+server:
+  port: 9000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: gateway
+#    路由转发
+  cloud:
+    gateway:
+      routes:
+        - id: system
+          uri: http://127.0.0.1:9001
+          predicates:
+            - Path=/system/**
+        - id: business
+          uri: http://127.0.0.1:9002
+          predicates:
+            - Path=/business/**
+
+
+
