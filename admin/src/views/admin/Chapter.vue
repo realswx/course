@@ -174,6 +174,7 @@
           console.log("保存大章列表结果：", response);
           let responseData = response.data;
           if (responseData.success) {
+            _this.$data.chapter = _this.$options.data().chapter;
             $("#form-modal").modal("hide");
             _this.list(_this.$refs.pagination.pageNum);
           }
