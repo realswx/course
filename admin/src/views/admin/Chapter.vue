@@ -1,11 +1,12 @@
 <template>
   <div>
     <p>
-      <button v-on:click="list()" class="btn btn-white btn-default btn-round">
+      <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
         <i class="ace-icon fa fa-refresh green"></i>
         刷新
       </button>
     </p>
+    <Pagination ref="pagination" v-bind:list="list" v-bind:itemCount="6"></Pagination>
     <table id="simple-table" class="table  table-bordered table-hover">
       <thead>
       <tr>
@@ -94,30 +95,35 @@
 </template>
 
 <script>
-export default {
-  name: 'Chapter',
-  data: function() {
-    return {
-      chapters: []
-    }
-  },
-  mounted: function() {
-    let _this = this;
-    _this.list();
-    // sidebar激活样式方法一
-    // this.$parent.activeSidebar("business-chapter-sidebar");
-  },
-  methods: {
-    list() {
+  import Pagination from "../../components/Pagination";
+
+  export default {
+    components: { Pagination },
+    name: 'Chapter',
+    data: function () {
+      return {
+        chapters: []
+      }
+    },
+    mounted: function () {
       let _this = this;
-      _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/list', {
-        pageNum: 1,
-        pageSize: 1
-      }).then((response) => {
-        console.log("查询大章列表结果：", response);
-        _this.chapters = response.data.list;
-      })
+      _this.$refs.pagination.pageSize = 5;
+      _this.list(1);
+      // sidebar激活样式方法一
+      // this.$parent.activeSidebar("business-chapter-sidebar");
+    },
+    methods: {
+      list(pageNum) {
+        let _this = this;
+        _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/list', {
+          pageNum: pageNum,
+          pageSize: _this.$refs.pagination.pageSize,
+        }).then((response) => {
+          console.log("查询大章列表结果：", response);
+          _this.chapters = response.data.list;
+          _this.$refs.pagination.render(pageNum, response.data.total);
+        })
+      }
     }
   }
-}
 </script>
