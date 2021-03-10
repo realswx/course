@@ -41,11 +41,8 @@
         <td>{{chapter.courseId}}</td>
         <td>
           <div class="hidden-sm hidden-xs btn-group">
-            <button class="btn btn-xs btn-success">
-              <i class="ace-icon fa fa-check bigger-120"></i>
-            </button>
 
-            <button class="btn btn-xs btn-info">
+            <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
               <i class="ace-icon fa fa-pencil bigger-120"></i>
             </button>
 
@@ -53,9 +50,6 @@
               <i class="ace-icon fa fa-trash-o bigger-120"></i>
             </button>
 
-            <button class="btn btn-xs btn-warning">
-              <i class="ace-icon fa fa-flag bigger-120"></i>
-            </button>
           </div>
 
           <div class="hidden-md hidden-lg">
@@ -65,16 +59,9 @@
               </button>
 
               <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                <li>
-                  <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																			<span class="blue">
-																				<i class="ace-icon fa fa-search-plus bigger-120"></i>
-																			</span>
-                  </a>
-                </li>
 
                 <li>
-                  <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+                  <a v-on:click="edit(chapter)" href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
 																			<span class="green">
 																				<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																			</span>
@@ -175,11 +162,18 @@
           let responseData = response.data;
           if (responseData.success) {
             _this.$data.chapter = _this.$options.data().chapter;
+            // _this.chapter = {};
             $("#form-modal").modal("hide");
             _this.list(_this.$refs.pagination.pageNum);
           }
         })
-      }
+      },
+
+      edit(chapter) {
+        let _this = this;
+        _this.chapter = $.extend({}, chapter);
+        $("#form-modal").modal("show");
+      },
     }
   }
 </script>
