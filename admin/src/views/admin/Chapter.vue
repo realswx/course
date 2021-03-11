@@ -202,8 +202,8 @@
                 _this.list(_this.$refs.pagination.pageNum);
                 Swal.fire(
                         '删除成功！',
-                        // '删除成功！',
-                        // 'success'
+                        '',
+                        'success'
                 )
               }
             })
