@@ -46,7 +46,7 @@
               <i class="ace-icon fa fa-pencil bigger-120"></i>
             </button>
 
-            <button class="btn btn-xs btn-danger">
+            <button v-on:click="delModal(chapter.id)" class="btn btn-xs btn-danger">
               <i class="ace-icon fa fa-trash-o bigger-120"></i>
             </button>
 
@@ -69,7 +69,7 @@
                 </li>
 
                 <li>
-                  <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                  <a v-on:click="delModal(chapter.id)" href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
 																			<span class="red">
 																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																			</span>
@@ -83,6 +83,8 @@
 
       </tbody>
     </table>
+
+
     <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -113,6 +115,23 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <div id="del-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4>确认删除？</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button v-on:click="del(chapter.id)" type="button" class="btn btn-primary">删除</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
   </div>
 </template>
 
@@ -138,6 +157,8 @@
     methods: {
       add() {
         let _this = this;
+        _this.$data.chapter = _this.$options.data().chapter;
+        // _this.chapter = {};
         $("#form-modal").modal("show");
       },
 
@@ -161,8 +182,7 @@
           console.log("保存大章列表结果：", response);
           let responseData = response.data;
           if (responseData.success) {
-            _this.$data.chapter = _this.$options.data().chapter;
-            // _this.chapter = {};
+            // _this.$data.chapter = _this.$options.data().chapter;
             $("#form-modal").modal("hide");
             _this.list(_this.$refs.pagination.pageNum);
           }
@@ -171,9 +191,29 @@
 
       edit(chapter) {
         let _this = this;
-        _this.chapter = $.extend({}, chapter);
         $("#form-modal").modal("show");
       },
+
+      delModal(id) {
+        let _this = this;
+        _this.chapter.id = id;
+        $("#del-modal").modal("show");
+      },
+
+      del(id) {
+        console.log(id);
+        let _this = this;
+        _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id
+        ).then((response) => {
+          console.log("删除大章列表结果：", response);
+          let responseData = response.data;
+          if (responseData.success) {
+            $("#del-modal").modal("hide");
+            _this.list(_this.$refs.pagination.pageNum);
+          }
+        })
+      },
+
     }
   }
 </script>
