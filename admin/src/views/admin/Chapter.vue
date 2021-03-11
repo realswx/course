@@ -173,7 +173,7 @@
             _this.$data.chapter = _this.$options.data().chapter;
             $("#form-modal").modal("hide");
             _this.list(_this.$refs.pagination.pageNum);
-            toast.success("保存成功！");
+            Toast.success("保存成功！");
           }
         })
       },
@@ -188,32 +188,21 @@
       del(id) {
         console.log(id);
         let _this = this;
-        Swal.fire({
-          title: '确认删除？',
-          // text: "删除后不可恢复",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: '删除',
-          cancelButtonText: '取消'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Loading.show();
-            _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id
-            ).then((response) => {
-              Loading.hide();
-              console.log("删除大章列表结果：", response);
-              let responseData = response.data;
-              if (responseData.success) {
-                // $("#del-modal").modal("hide");
-                _this.list(_this.$refs.pagination.pageNum);
-                toast.success("删除成功！");
-              }
-            })
 
-          }
-        })
+        Confirm.show("删除大章后不可恢复", function () {
+          Loading.show();
+          _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id
+          ).then((response) => {
+            Loading.hide();
+            console.log("删除大章列表结果：", response);
+            let responseData = response.data;
+            if (responseData.success) {
+              // $("#del-modal").modal("hide");
+              _this.list(_this.$refs.pagination.pageNum);
+              Toast.success("删除成功！");
+            }
+          })
+        });
 
       },
 
