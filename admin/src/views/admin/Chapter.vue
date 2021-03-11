@@ -46,7 +46,7 @@
               <i class="ace-icon fa fa-pencil bigger-120"></i>
             </button>
 
-            <button v-on:click="delModal(chapter.id)" class="btn btn-xs btn-danger">
+            <button v-on:click="del(chapter.id)" class="btn btn-xs btn-danger">
               <i class="ace-icon fa fa-trash-o bigger-120"></i>
             </button>
 
@@ -69,7 +69,7 @@
                 </li>
 
                 <li>
-                  <a v-on:click="delModal(chapter.id)" href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                  <a v-on:click="del(chapter.id)" href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
 																			<span class="red">
 																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																			</span>
@@ -115,22 +115,6 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
-    <div id="del-modal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4>确认删除？</h4>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button v-on:click="del(chapter.id)" type="button" class="btn btn-primary">删除</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
 
   </div>
 </template>
@@ -194,24 +178,39 @@
         $("#form-modal").modal("show");
       },
 
-      delModal(id) {
-        let _this = this;
-        _this.chapter.id = id;
-        $("#del-modal").modal("show");
-      },
 
       del(id) {
         console.log(id);
         let _this = this;
-        _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id
-        ).then((response) => {
-          console.log("删除大章列表结果：", response);
-          let responseData = response.data;
-          if (responseData.success) {
-            $("#del-modal").modal("hide");
-            _this.list(_this.$refs.pagination.pageNum);
+        Swal.fire({
+          title: '确认删除？',
+          // text: "删除后不可恢复",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '删除',
+          cancelButtonText: '取消'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id
+            ).then((response) => {
+              console.log("删除大章列表结果：", response);
+              let responseData = response.data;
+              if (responseData.success) {
+                // $("#del-modal").modal("hide");
+                _this.list(_this.$refs.pagination.pageNum);
+                Swal.fire(
+                        '删除成功！',
+                        // '删除成功！',
+                        // 'success'
+                )
+              }
+            })
+
           }
         })
+
       },
 
     }
