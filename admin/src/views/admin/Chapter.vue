@@ -141,7 +141,7 @@
     methods: {
       add() {
         let _this = this;
-        _this.$data.chapter = _this.$options.data().chapter;
+        // _this.$data.chapter = _this.$options.data().chapter;
         // _this.chapter = {};
         $("#form-modal").modal("show");
       },
@@ -166,15 +166,17 @@
           console.log("保存大章列表结果：", response);
           let responseData = response.data;
           if (responseData.success) {
-            // _this.$data.chapter = _this.$options.data().chapter;
+            _this.$data.chapter = _this.$options.data().chapter;
             $("#form-modal").modal("hide");
             _this.list(_this.$refs.pagination.pageNum);
+            toast.success("保存成功！");
           }
         })
       },
 
       edit(chapter) {
         let _this = this;
+        _this.chapter = $.extend({}, chapter);
         $("#form-modal").modal("show");
       },
 
@@ -200,11 +202,7 @@
               if (responseData.success) {
                 // $("#del-modal").modal("hide");
                 _this.list(_this.$refs.pagination.pageNum);
-                Swal.fire(
-                        '删除成功！',
-                        '',
-                        'success'
-                )
+                toast.success("删除成功！");
               }
             })
 
