@@ -139,6 +139,9 @@
       // this.$parent.activeSidebar("business-chapter-sidebar");
     },
     methods: {
+      /**
+       * 点击【新增】
+       */
       add() {
         let _this = this;
         _this.$data.chapter = _this.$options.data().chapter;
@@ -146,6 +149,9 @@
         $("#form-modal").modal("show");
       },
 
+      /**
+       * 列表查询
+       */
       list(pageNum) {
         Loading.show(); //加载动画效果
         let _this = this;
@@ -154,13 +160,16 @@
           pageSize: _this.$refs.pagination.pageSize,
         }).then((response) => {
           Loading.hide(); // 加载动画效果关闭
-          console.log("查询大章列表结果：", response);
+          // console.log("查询大章列表结果：", response);
           let responseData = response.data;
           _this.chapters = responseData.content.list;
           _this.$refs.pagination.render(pageNum, responseData.content.total);
         })
       },
 
+      /**
+       * 点击【保存】
+       */
       save(pageNum) {
         let _this = this;
         //校验
@@ -173,7 +182,7 @@
         _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save',
                 _this.chapter).then((response) => {
                   Loading.hide();
-          console.log("保存大章列表结果：", response);
+          // console.log("保存大章列表结果：", response);
           let responseData = response.data;
           if (responseData.success) {
             // _this.$data.chapter = _this.$options.data().chapter;
@@ -186,15 +195,20 @@
         })
       },
 
+      /**
+       * 点击【编辑】
+       */
       edit(chapter) {
         let _this = this;
         _this.chapter = $.extend({}, chapter);
         $("#form-modal").modal("show");
       },
 
-
+      /**
+       * 点击【删除】
+       */
       del(id) {
-        console.log(id);
+        // console.log(id);
         let _this = this;
 
         Confirm.show("删除大章后不可恢复", function () {
@@ -202,7 +216,7 @@
           _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id
           ).then((response) => {
             Loading.hide();
-            console.log("删除大章列表结果：", response);
+            // console.log("删除大章列表结果：", response);
             let responseData = response.data;
             if (responseData.success) {
               // $("#del-modal").modal("hide");
