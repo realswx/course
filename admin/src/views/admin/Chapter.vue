@@ -180,6 +180,8 @@
             $("#form-modal").modal("hide");
             _this.list(_this.$refs.pagination.pageNum);
             Toast.success("保存成功！");
+          } else {
+            Toast.warning(responseData.message);
           }
         })
       },
