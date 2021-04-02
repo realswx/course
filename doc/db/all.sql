@@ -42,3 +42,23 @@ insert  into `chapter`(`id`,`course_id`, `name`) values
 ('00000015', '00000015', '大章15'),
 ('00000016', '00000016', '大章16'),
 ('00000017', '00000017', '大章17');
+
+
+/*Table structure for table `section` */
+DROP TABLE IF EXISTS `section`;
+CREATE TABLE `section` (
+    `id` char(8) NOT NULL DEFAULT '' COMMENT 'ID',
+    `title` varchar(50) NOT NULL COMMENT '名称',
+    `course_id` char(8) COMMENT '课程ID|course.id',
+    `chapter_id` char(8) COMMENT '大章|chapter.id',
+    `video` varchar(200) COMMENT '视频',
+    `time` int COMMENT '时长|单位秒',
+    `charge` char(1) COMMENT '收费|C 收费；F 免费',
+    `sort` int COMMENT '顺序',
+    `created_at` DATETIME(3) COMMENT '创建时间',
+    `updated_at` DATETIME(3) COMMENT '修改时间',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='小节';
+/*Data for the table `section` */
+insert  into `section`(`id`,`title`,`course_id`,`chapter_id`,`video`,`time`,`charge`,`sort`,`created_at`,`updated_at`) values
+('00000001', '测试小节01', '00000001', '00000000', '', 500, 'F', 1, now(), now());
