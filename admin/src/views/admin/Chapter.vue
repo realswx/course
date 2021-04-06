@@ -155,7 +155,7 @@
       list(pageNum) {
         Loading.show(); //加载动画效果
         let _this = this;
-        _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/list', {
+        _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/chapter/list', {
           pageNum: pageNum,
           pageSize: _this.$refs.pagination.pageSize,
         }).then((response) => {
@@ -179,7 +179,7 @@
           return;
         }
         Loading.show();
-        _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save',
+        _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/chapter/save',
                 _this.chapter).then((response) => {
                   Loading.hide();
           // console.log("保存大章列表结果：", response);
@@ -213,7 +213,7 @@
 
         Confirm.show("删除大章后不可恢复", function () {
           Loading.show();
-          _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/' + id
+          _this.$ajax.delete(process.env.VUE_APP_SERVER + '/business/admin/chapter/delete/' + id
           ).then((response) => {
             Loading.hide();
             // console.log("删除大章列表结果：", response);
