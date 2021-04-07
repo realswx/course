@@ -17,6 +17,11 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+<#list typeSet as type>
+    <#if type=='Date'>
+        import java.util.Date;
+    </#if>
+</#list>
 
 @Service
 public class ${Domain}Service {
@@ -31,6 +36,11 @@ public class ${Domain}Service {
     public void list(PageDto pageDto) {
         PageHelper.startPage(pageDto.getPageNum(), pageDto.getPageSize());
         ${Domain}Example ${domain}Example = new ${Domain}Example();
+        <#list fieldList as field>
+            <#if field.nameHump=='sort'>
+        ${domain}Example.setOrderByClause("sort asc");
+            </#if>
+        </#list>
 //        ${domain}Example.createCriteria().andIdEqualTo("1"); //createCriteria()相当于where。查询id为1的记录
 //        ${domain}Example.setOrderByClause("id desc");
         List<${Domain}> ${domain}List = ${domain}Mapper.selectByExample(${domain}Example);
@@ -70,6 +80,19 @@ public class ${Domain}Service {
      * 新增
      */
     private void insert(${Domain} ${domain}) {
+        <#list typeSet as type>
+            <#if type=='Date'>
+        Date now = new Date();
+            </#if>
+        </#list>
+        <#list fieldList as field>
+            <#if field.nameHump=='createdAt'>
+        ${domain}.setCreatedAt(now);
+            </#if>
+            <#if field.nameHump=='updatedAt'>
+        ${domain}.setUpdatedAt(now);
+            </#if>
+        </#list>
         ${domain}.setId(UuidUtil.getShortUuid());
 //        BeanUtils.copyProperties(${domain}Dto, ${domain});
         ${domain}Mapper.insert(${domain});
@@ -79,6 +102,11 @@ public class ${Domain}Service {
      * 更新
      */
     private void update(${Domain} ${domain}) {
+        <#list fieldList as field>
+            <#if field.nameHump=='updatedAt'>
+        ${domain}.setUpdatedAt(new Date());
+            </#if>
+        </#list>
         ${domain}Mapper.updateByPrimaryKey(${domain});
     }
 

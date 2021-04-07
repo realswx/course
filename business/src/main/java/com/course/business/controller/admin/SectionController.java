@@ -40,7 +40,7 @@ public class SectionController {
     public ResponseDto save(@RequestBody SectionDto sectionDto) {
 //        LOG.info("====sectionDto1: {}", sectionDto);
 
-        // 保存校验
+        // 保存校验，某些系统字段无需校验
         ValidatorUtil.require(sectionDto.getTitle(), "名称");
         ValidatorUtil.length(sectionDto.getTitle(), "名称", 1, 50);
         ValidatorUtil.length(sectionDto.getVideo(), "视频", 1, 200);

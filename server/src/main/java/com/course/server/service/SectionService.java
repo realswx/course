@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+        import java.util.Date;
 
 @Service
 public class SectionService {
@@ -31,6 +32,7 @@ public class SectionService {
     public void list(PageDto pageDto) {
         PageHelper.startPage(pageDto.getPageNum(), pageDto.getPageSize());
         SectionExample sectionExample = new SectionExample();
+        sectionExample.setOrderByClause("sort asc");
 //        sectionExample.createCriteria().andIdEqualTo("1"); //createCriteria()相当于where。查询id为1的记录
 //        sectionExample.setOrderByClause("id desc");
         List<Section> sectionList = sectionMapper.selectByExample(sectionExample);
@@ -70,6 +72,9 @@ public class SectionService {
      * 新增
      */
     private void insert(Section section) {
+        Date now = new Date();
+        section.setCreatedAt(now);
+        section.setUpdatedAt(now);
         section.setId(UuidUtil.getShortUuid());
 //        BeanUtils.copyProperties(sectionDto, section);
         sectionMapper.insert(section);
@@ -79,6 +84,7 @@ public class SectionService {
      * 更新
      */
     private void update(Section section) {
+        section.setUpdatedAt(new Date());
         sectionMapper.updateByPrimaryKey(section);
     }
 
