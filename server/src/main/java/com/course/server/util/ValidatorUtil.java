@@ -18,6 +18,7 @@ public class ValidatorUtil {
      * 长度校验
      */
     public static void length(String str, String fieldName, int min, int max) {
+        // 无值则不做校验
         if (StringUtils.isEmpty(str)) {
             return;
         }

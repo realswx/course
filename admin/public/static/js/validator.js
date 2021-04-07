@@ -9,6 +9,7 @@ Validator = {
     },
 
     length: function (value, text, min, max) {
+        // 如果为空，就不做后续校验
         if (Tool.isEmpty(value)) {
             return true;
         }
