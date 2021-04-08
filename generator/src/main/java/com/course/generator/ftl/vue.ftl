@@ -145,7 +145,7 @@
 
     export default {
         components: { Pagination },
-        name: '${Domain}',
+        name: '${module}-${domain}',
         data: function () {
             return {
                 ${domain}: {},

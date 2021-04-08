@@ -166,7 +166,7 @@
 
     export default {
         components: { Pagination },
-        name: 'Section',
+        name: 'business-section',
         data: function () {
             return {
                 section: {},
