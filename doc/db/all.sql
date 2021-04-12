@@ -62,3 +62,26 @@ CREATE TABLE `section` (
 /*Data for the table `section` */
 insert  into `section`(`id`,`title`,`course_id`,`chapter_id`,`video`,`time`,`charge`,`sort`,`created_at`,`updated_at`) values
 ('00000001', '测试小节01', '00000001', '00000000', '', 500, 'F', 1, now(), now());
+
+
+/*Table structure for table `course` */
+DROP TABLE IF EXISTS `course`;
+CREATE TABLE `course` (
+    `id` char(8) NOT NULL DEFAULT '' COMMENT 'ID',
+    `name` varchar(50) NOT NULL COMMENT '名称',
+    `summary` varchar(2000) COMMENT '概述',
+    `time` int DEFAULT 0 COMMENT '时长|单位秒',
+    `price` decimal(8,2) DEFAULT 0.00 COMMENT '价格（元）',
+    `image` varchar(100) COMMENT '封面',
+    `level` char(1) COMMENT '级别|ONE("1", "初级"),TWO("2","中级"),THREE("3","高级")',
+    `charge` char(1) COMMENT '收费|CHARGE("C", "收费"),FREE("F","免费")',
+    `status` char(1) COMMENT '状态|PUBLISH("P", "发布"),DRAFT("D","草稿")',
+    `enroll` integer DEFAULT 0 COMMENT '报名数',
+    `sort` int COMMENT '顺序',
+    `created_at` DATETIME(3) COMMENT '创建时间',
+    `updated_at` DATETIME(3) COMMENT '修改时间',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='课程';
+/*Data for the table `course` */
+insert  into `course`(`id`,`name`,`summary`,`time`,`price`,`image`,`level`,`charge`,`status`,`enroll`,`sort`,`created_at`,`updated_at`) values
+('00000001', '测试课程01', '这是一门测试课程', 7200, 19.9, '', 0, 'C', 'D', 100, 0, now(), now());
